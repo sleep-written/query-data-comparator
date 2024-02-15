@@ -21,8 +21,10 @@ try {
     }
     
     const setupData = await setup.load();
-    const { before, after } = await new SQLRunner(setupData).exec();
+    npmlog.info('app', 'query fetch:   ', setupData.queryFetch);
+    npmlog.info('app', 'query transact:', setupData.queryTransact);
     
+    const { before, after } = await new SQLRunner(setupData).exec();
     const results = new DataComparer(setupData.primaryKey, before, after).runAnalysis();
     console.dir(results, { depth: 6 });
 } catch (err: any) {
